@@ -76,14 +76,14 @@ class Api {
   }
 
   changeLikeCardStatus(id, met) {
-    return fetch(`${this._baseUrl}cards/likes/${id}`, {
+    return fetch(`${this._baseUrl}cards/${id}/likes`, {
       method: met,
       headers: this._headers,
     }).then((res) => this.handleResponse(res));
   }
 
   deleteLikeCard(id) {
-    return fetch(`${this._baseUrl}cards/likes/${id}`, {
+    return fetch(`${this._baseUrl}cards/${id}/likes`, {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => this.handleResponse(res));
@@ -101,13 +101,14 @@ class Api {
   }
 }
 
-//api для загрузки данных о пользователе
+let jwt = localStorage.getItem("jwt");
+
 const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-41/",
+  baseUrl: "https://api.kukreshma.students.nomoredomains.sbs/",
   headers: {
-    authorization: "06950c87-f349-452d-a6bd-e523931209ac",
-    "Content-Type": "application/json",
-  },
+        Authorization: `Bearer ${jwt}`,
+        "Content-Type": "application/json",
+      }
 });
 
 export { Api };

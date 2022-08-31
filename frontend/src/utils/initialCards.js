@@ -6,10 +6,7 @@ const configValidation = {
 };
 
 //мой id для сервера
-/// const myId = "f03d1a7c9876ea4c7fb48341";
-
-const BASE_URL = "https://kukreshma.students.nomoredomains.sbs/";
-/// const BASE_URL = "https://auth.nomoreparties.co/"; kukreshma.students.nomoredomains.sbs
+const BASE_URL = "https://api.kukreshma.students.nomoredomains.sbs/";
 
 export { configValidation };
 

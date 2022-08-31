@@ -2,9 +2,9 @@ import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import "./Card.js";
 
-function Сard(props) {
+function Сard(props) {  
   const currentUser = useContext(CurrentUserContext);
-
+  
   function handleCardClick() {
     props.onCardClick(props.name, props.link);
   }
@@ -14,7 +14,7 @@ function Сard(props) {
     !isOwn && "elements__dell_none"
   }`;
 
-  const isLiked = props.likes.some((i) => i._id === currentUser._id);
+  const isLiked = props.likes.some((i) => i === currentUser._id);  
   const cardHartButtonClassName = `elements__hart ${
     isLiked && "elements__hart_activ"
   }`;

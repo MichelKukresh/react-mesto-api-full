@@ -3,7 +3,7 @@ import Card from "./Card.js";
 import krest from "../images/krest.svg";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
-function Main(props) {
+function Main(props) {  
   const currentUser = useContext(CurrentUserContext);
 
   return (

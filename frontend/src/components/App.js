@@ -68,16 +68,16 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [userDaraRegister]);
 
   const [cards, setCards] = useState([]); // для данных карточек => провайдер
 
   useEffect(() => {
     api
       .getInitialCards()
-      .then((data) => {
+      .then((data) => {            
         setCards(
-          data.map((item) => ({
+          data.data.map((item) => ({
             name: item.name,
             link: item.link,
             likes: item.likes, //массив из лайкнувших
@@ -89,18 +89,18 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [userDaraRegister]);
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
     const apiMethod = isLiked ? "DELETE" : "PUT";
     //Отправляем запрос в API и получаем обновлённые данные карточки
     api
       .changeLikeCardStatus(card._id, apiMethod)
       .then((newCard) => {
         setCards((cards) =>
-          cards.map((c) => (c._id === card._id ? newCard : c))
+          cards.map((c) => (c._id === card._id ? newCard.data : c))
         );
       })
       .catch((err) => {
@@ -169,8 +169,8 @@ function App() {
     setButtonInfomationAboutSave("Сохранение...");
     api
       .postCard(name, link)
-      .then((newCard) => {
-        setCards([newCard, ...cards]);
+      .then((newCard) => {        
+        setCards([newCard.data, ...cards]);
         closeAllPopups();
       })      
       .catch((err) => {
@@ -215,12 +215,12 @@ function App() {
   };
 
   const tokenCheck = () => {
-    let jwt = localStorage.getItem("jwt");
+    let jwt = localStorage.getItem("jwt");    
     if (jwt) {
       getJWT(jwt)
         .then((data) => {
           setUserDaraRegister({
-            email: data.data.email,
+            email: data.email,
             password: "",
           });
         })
