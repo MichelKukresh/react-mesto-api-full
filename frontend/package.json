@@ -1,5 +1,4 @@
 {
-  "homepage": "https://michelkukresh.github.io/mesto-react-route/",
   "name": "mesto-react",
   "version": "0.1.0",
   "private": true,
@@ -19,7 +18,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "  scp -r ./build/* kukreshma@158.160.10.173:/home/kukreshma/react-mesto-api-full/frontend"
+    "deploy": "npm run build && scp -r ./build/* kukreshma@158.160.10.173:/home/kukreshma/react-mesto-api-full/mesto-frontend"
   },
   "eslintConfig": {
     "extends": [
