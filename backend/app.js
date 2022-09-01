@@ -40,6 +40,9 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
 });
 
+console.log(process.env.NODE_ENV); // production
+console.log(process.env.JWT_SECRET); // production
+
 app.use(cors());
 
 app.use(express.json());

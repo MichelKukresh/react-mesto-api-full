@@ -19,19 +19,19 @@ routesCards.get('/', allCards);
 
 routesCards.delete('/:id', celebrate({
   params: Joi.object().keys({
-    id: Joi.string().alphanum().length(24),
+    id: Joi.string().hex().length(24),
   }),
 }), idCards);
 
 routesCards.put('/:id/likes', celebrate({
   params: Joi.object().keys({
-    id: Joi.string().alphanum().length(24),
+    id: Joi.string().hex().length(24),
   }),
 }), likesCardPut);
 
 routesCards.delete('/:id/likes', celebrate({
   params: Joi.object().keys({
-    id: Joi.string().alphanum().length(24),
+    id: Joi.string().hex().length(24),
   }),
 }), likesCardDelete);
 
