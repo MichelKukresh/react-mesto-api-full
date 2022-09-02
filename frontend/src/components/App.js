@@ -59,37 +59,37 @@ function App() {
   const [buttonInfomationDelete, setButtonInfomationDelete] = useState("Да"); // функционал добавления подсказки
 
   //для данных о пользователе
-  useEffect(() => {
-    api
-      .getInitialUser()
-      .then((data) => {
-        setCurrentUser(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [userDaraRegister]);
+  // useEffect(() => {
+  //   api
+  //     .getInitialUser()
+  //     .then((data) => {
+  //       setCurrentUser(data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [userDaraRegister]);
 
   const [cards, setCards] = useState([]); // для данных карточек => провайдер
 
-  useEffect(() => {
-    api
-      .getInitialCards()
-      .then((data) => {            
-        setCards(
-          data.data.map((item) => ({
-            name: item.name,
-            link: item.link,
-            likes: item.likes, //массив из лайкнувших
-            owner: item.owner, //для проверки кто создал карточку\вешать корзину?
-            _id: item._id, //id самой карточки
-          }))
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [userDaraRegister]);
+  // useEffect(() => {
+  //   api
+  //     .getInitialCards()
+  //     .then((data) => {            
+  //       setCards(
+  //         data.data.map((item) => ({
+  //           name: item.name,
+  //           link: item.link,
+  //           likes: item.likes, //массив из лайкнувших
+  //           owner: item.owner, //для проверки кто создал карточку\вешать корзину?
+  //           _id: item._id, //id самой карточки
+  //         }))
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [userDaraRegister]);
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
