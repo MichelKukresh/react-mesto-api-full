@@ -24,13 +24,13 @@ const cardsSchema = new mongoose.Schema({
   owner: {
     // у пользователя есть имя — опишем требования к имени в схеме:
     type: mongoose.Schema.Types.ObjectId,  // тип ObjectId
-    ref: 'User',
+    // ref: 'User',
     required: true, // оно должно быть у каждого пользователя, так что имя — обязательное поле
   },
   likes: {
     // у пользователя есть имя — опишем требования к имени в схеме:
     type: mongoose.Schema.Types.ObjectId,  // тип ObjectId
-    ref: 'User',
+    // ref: 'User',
     default: [],
   },
   createdAt: {
