@@ -26,31 +26,30 @@ function App() {
   const [currentUser, setCurrentUser] = useState({ name: "", about: "" }); //о пользователе => провайдер
   const [isEditCourseDeletePopupOpen, setIsEditCourseDeletePopupOpen] =
     useState(false); // подтверждение удаления
-  
+
   const [isEditRegisterPopupPopupOpen, setEditRegisterPopupPopupOpen] =
     useState(false); // Попап регистрации
   const [isSuccessfulRegistration, setSuccessfulRegistration] = useState(false); //Проверка успешной регистрации
   const navigate = useNavigate();
-    //Проверка залогинился ли ранее пользователь
-    const [loggedIn, setLoggedIn] = useState(false);
+  //Проверка залогинился ли ранее пользователь
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const [selectedCard, setSelectedCard] = useState({
     state: false,
     name: "",
     link: "",
   }); //для открытия большой карточки
-  
-    //хранение данных при регистрации
-    const [userDaraRegister, setUserDaraRegister] = useState({
-      email: "",
-      password: "",
-    });
+
+  //хранение данных при регистрации
+  const [userDaraRegister, setUserDaraRegister] = useState({
+    email: "",
+    password: "",
+  });
 
   //при первой загрузке проверка есть ли у нас JWT
   useEffect(() => {
     tokenCheck();
   }, []);
-
 
   const [cardDeleteAfterCourse, setCardDeleteAfterCourse] = useState({}); //карточка которую нужно удалить
 
@@ -58,38 +57,30 @@ function App() {
     useState("Сохранить"); // функционал добавления подсказки
   const [buttonInfomationDelete, setButtonInfomationDelete] = useState("Да"); // функционал добавления подсказки
 
-  // для данных о пользователе
-  useEffect(() => {
-    api
-      .getInitialUser()
-      .then((data) => {
-        setCurrentUser(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [userDaraRegister]);
-
   const [cards, setCards] = useState([]); // для данных карточек => провайдер
 
   useEffect(() => {
-    api
-      .getInitialCards()
-      .then((data) => {            
-        setCards(
-          data.data.map((item) => ({
-            name: item.name,
-            link: item.link,
-            likes: item.likes, //массив из лайкнувших
-            owner: item.owner, //для проверки кто создал карточку\вешать корзину?
-            _id: item._id, //id самой карточки
-          }))
-        );
-      })
-      .catch((err) => {
+    if (loggedIn) {
+      Promise.all([
+        api.getInitialUser().then((data) => {
+          setCurrentUser(data);
+        }),
+        api.getInitialCards().then((data) => {
+          setCards(
+            data.data.map((item) => ({
+              name: item.name,
+              link: item.link,
+              likes: item.likes, //массив из лайкнувших
+              owner: item.owner, //для проверки кто создал карточку\вешать корзину?
+              _id: item._id, //id самой карточки
+            }))
+          );
+        }),
+      ]).catch((err) => {
         console.log(err);
       });
-  }, [userDaraRegister]);
+    }
+  }, [loggedIn]);
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
@@ -112,10 +103,10 @@ function App() {
     setButtonInfomationDelete("Удаление...");
     api
       .deleteCard(card._id)
-      .then(() => {        
+      .then(() => {
         setCards((cards) => cards.filter((c) => c._id !== card._id));
         closeAllPopups();
-      })      
+      })
       .catch((err) => {
         console.log(err);
       })
@@ -143,7 +134,7 @@ function App() {
       .then((data) => {
         setCurrentUser(data);
         closeAllPopups();
-      })      
+      })
       .catch((err) => {
         console.log(err);
       })
@@ -169,10 +160,10 @@ function App() {
     setButtonInfomationAboutSave("Сохранение...");
     api
       .postCard(name, link)
-      .then((newCard) => {        
+      .then((newCard) => {
         setCards([newCard.data, ...cards]);
         closeAllPopups();
-      })      
+      })
       .catch((err) => {
         console.log(err);
       })
@@ -215,7 +206,7 @@ function App() {
   };
 
   const tokenCheck = () => {
-    let jwt = localStorage.getItem("jwt");    
+    let jwt = localStorage.getItem("jwt");
     if (jwt) {
       getJWT(jwt)
         .then((data) => {
@@ -245,7 +236,7 @@ function App() {
   };
 
   return (
-    <CurrentUserContext.Provider value={ currentUser }>
+    <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <div className="page__container">
           <Routes>
@@ -339,15 +330,12 @@ function App() {
           />
 
           <InfoToolTip
-           isOpen={isEditRegisterPopupPopupOpen}
-           closeAllPopups={closeAllPopups}
-           isSuccessfulRegistration={isSuccessfulRegistration}
-          
+            isOpen={isEditRegisterPopupPopupOpen}
+            closeAllPopups={closeAllPopups}
+            isSuccessfulRegistration={isSuccessfulRegistration}
           />
 
-          <EditRegisterPopup
-          
-          />
+          <EditRegisterPopup />
         </div>
       </div>
     </CurrentUserContext.Provider>
