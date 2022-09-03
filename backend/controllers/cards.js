@@ -25,6 +25,7 @@ module.exports.idCards = (req, res, next) => {
       if (!card) {
         throw new ErrorNotFound('Передан несуществующий _id карточки.');
       }
+      console.log(card, req.user._id);
       if (card.owner !== req.user._id) { /// card.owner._id
         throw new ErrorAuthorizedButForbidden('Удаление карточки чужого пользователя запрещено.');
       }
