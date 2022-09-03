@@ -1,17 +1,8 @@
 class Api {
   constructor(config) {
-    this._baseUrl = config.baseUrl;
-    // this._headers = config.headers;
+    this._baseUrl = config.baseUrl;    
   }
-
-  // .then((res) => {
-  //   if (res.ok) {
-  //     return res.json();
-  //   }
-  //   // если ошибка, отклоняем промис
-  //   return Promise.reject(`Ошибка: ${res.status}`);
-  // });
-
+  
   handleResponse(res) {
     if (res.ok) {      
       return res.json();
@@ -25,11 +16,7 @@ class Api {
   getInitialCards(jwtLogin) {
     return fetch(`${this._baseUrl}cards`, {
       method: "GET",
-      headers: this._headers,
-      // headers: {
-      //   Authorization: `Bearer ${jwtLogin}`,
-      //   "Content-Type": "application/json",
-      // }
+      headers: this._headers,      
     }).then((res) => this.handleResponse(res));
   }
 
@@ -37,16 +24,11 @@ class Api {
   getInitialUser(jwtLogin) {
     return fetch(`${this._baseUrl}users/me`, {
       method: "GET",
-      headers: this._headers,
-      // headers: {
-      //   Authorization: `Bearer ${jwtLogin}`,
-      //   "Content-Type": "application/json",
-      // }
+      headers: this._headers,      
     }).then((res) => this.handleResponse(res));
   }
 
   //!!USER
-
   patchUserInfoNameAbout(name, profession) {
     return fetch(`${this._baseUrl}users/me`, {
       method: "PATCH",
@@ -109,8 +91,7 @@ class Api {
   }
 
   getTwtForNewApi(jwt) {
-    this._headers = this._changleHeaders(jwt);
-    console.log(this._headers);
+    this._headers = this._changleHeaders(jwt);    
   }
 
   _changleHeaders(changleJwt) { 
@@ -119,14 +100,8 @@ class Api {
   }
 }
 
-// let jwt = localStorage.getItem("jwt");
-
 const api = new Api({
-  baseUrl: "https://api.kukreshma.students.nomoredomains.sbs/",
-  // headers: {
-  //       Authorization: `Bearer ${jwt}`,
-  //       "Content-Type": "application/json",
-  //     }
+  baseUrl: "https://api.kukreshma.students.nomoredomains.sbs/",  
 });
 
 export { Api };

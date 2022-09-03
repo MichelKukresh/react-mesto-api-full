@@ -59,17 +59,13 @@ function App() {
 
   const [cards, setCards] = useState([]); // для данных карточек => провайдер
 
-  useEffect(() => {
-    // let jwt = localStorage.getItem("jwt");
+  useEffect(() => {    
     api.getTwtForNewApi(localStorage.getItem("jwt"));
     if (loggedIn) { 
-      api.getTwtForNewApi(localStorage.getItem("jwt"));     
-      // api.getTwtForNewApi(jwt);
-      // console.log(jwt);
+      api.getTwtForNewApi(localStorage.getItem("jwt"));       
       Promise.all([
         api.getInitialUser().then((data) => {
-          setCurrentUser(data);
-          console.log(data); ///
+          setCurrentUser(data);          
         }),
         api.getInitialCards().then((data) => {
           setCards(
@@ -95,8 +91,7 @@ function App() {
     //Отправляем запрос в API и получаем обновлённые данные карточки
     api
       .changeLikeCardStatus(card._id, apiMethod)
-      .then((newCard) => {
-        console.log(newCard); ///
+      .then((newCard) => {        
         setCards((cards) =>
           cards.map((c) => (c._id === card._id ? newCard.data : c))
         );
