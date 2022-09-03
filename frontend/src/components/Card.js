@@ -9,7 +9,7 @@ function Сard(props) {
     props.onCardClick(props.name, props.link);
   }
 
-  const isOwn = props.owner._id === currentUser._id; //проверяем создал ли я, для добавления корзины
+  const isOwn = props.owner === currentUser._id; //проверяем создал ли я, для добавления корзины
   const cardDeleteButtonClassName = `elements__dell ${
     !isOwn && "elements__dell_none"
   }`;

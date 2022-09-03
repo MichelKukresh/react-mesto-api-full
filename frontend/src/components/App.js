@@ -60,10 +60,16 @@ function App() {
   const [cards, setCards] = useState([]); // для данных карточек => провайдер
 
   useEffect(() => {
-    if (loggedIn) {
+    // let jwt = localStorage.getItem("jwt");
+    api.getTwtForNewApi(localStorage.getItem("jwt"));
+    if (loggedIn) { 
+      api.getTwtForNewApi(localStorage.getItem("jwt"));     
+      // api.getTwtForNewApi(jwt);
+      // console.log(jwt);
       Promise.all([
         api.getInitialUser().then((data) => {
           setCurrentUser(data);
+          console.log(data); ///
         }),
         api.getInitialCards().then((data) => {
           setCards(
@@ -82,7 +88,7 @@ function App() {
     }
   }, [loggedIn]);
 
-  function handleCardLike(card) {
+  function handleCardLike(card) {    
     // Снова проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some((i) => i === currentUser._id);
     const apiMethod = isLiked ? "DELETE" : "PUT";
@@ -90,6 +96,7 @@ function App() {
     api
       .changeLikeCardStatus(card._id, apiMethod)
       .then((newCard) => {
+        console.log(newCard); ///
         setCards((cards) =>
           cards.map((c) => (c._id === card._id ? newCard.data : c))
         );

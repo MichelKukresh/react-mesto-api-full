@@ -1,7 +1,7 @@
 class Api {
   constructor(config) {
     this._baseUrl = config.baseUrl;
-    this._headers = config.headers;
+    // this._headers = config.headers;
   }
 
   // .then((res) => {
@@ -22,18 +22,26 @@ class Api {
   };
 
   //получаем данные карточек для дальнейшей вставки
-  getInitialCards() {
+  getInitialCards(jwtLogin) {
     return fetch(`${this._baseUrl}cards`, {
       method: "GET",
       headers: this._headers,
+      // headers: {
+      //   Authorization: `Bearer ${jwtLogin}`,
+      //   "Content-Type": "application/json",
+      // }
     }).then((res) => this.handleResponse(res));
   }
 
   //!!!USER  получаем данные с сервера о пользователе
-  getInitialUser() {
+  getInitialUser(jwtLogin) {
     return fetch(`${this._baseUrl}users/me`, {
       method: "GET",
       headers: this._headers,
+      // headers: {
+      //   Authorization: `Bearer ${jwtLogin}`,
+      //   "Content-Type": "application/json",
+      // }
     }).then((res) => this.handleResponse(res));
   }
 
@@ -99,16 +107,26 @@ class Api {
       }),
     }).then((res) => this.handleResponse(res));
   }
+
+  getTwtForNewApi(jwt) {
+    this._headers = this._changleHeaders(jwt);
+    console.log(this._headers);
+  }
+
+  _changleHeaders(changleJwt) { 
+    return {Authorization: `Bearer ${changleJwt}`,
+    "Content-Type": "application/json",}     
+  }
 }
 
-let jwt = localStorage.getItem("jwt");
+// let jwt = localStorage.getItem("jwt");
 
 const api = new Api({
   baseUrl: "https://api.kukreshma.students.nomoredomains.sbs/",
-  headers: {
-        Authorization: `Bearer ${jwt}`,
-        "Content-Type": "application/json",
-      }
+  // headers: {
+  //       Authorization: `Bearer ${jwt}`,
+  //       "Content-Type": "application/json",
+  //     }
 });
 
 export { Api };
